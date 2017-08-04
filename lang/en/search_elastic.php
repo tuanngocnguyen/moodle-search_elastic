@@ -73,6 +73,8 @@ $string['signingsettings'] = 'Request signing settings';
 $string['signingsettings_desc'] = 'If your Elasticsearch setup uses Request Signing enable and configure it below.
 
 This generally only applies if you are using Amazon Web Service (AWS) to provide your Elasticsearch Endpoint';
+$string['subplugintype_elasticprocessors'] = 'File indexing processor';
+$string['subplugintype_elasticprocessors_plural'] = 'File indexing processors';
 $string['tikahostname'] = 'Tika Hostname';
 $string['tikahostname_desc'] = 'The FQDN of the Apache Tika endpoint';
 $string['tikaport'] = 'Tika Port';

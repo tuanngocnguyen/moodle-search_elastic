@@ -269,7 +269,7 @@ class document extends \core_search\document {
         $data = $this->export_for_engine();
         $imageinfo = $file->get_imageinfo();
         $filetext = '';
-
+        error_log($file->get_filename());
         if ($imageinfo) {
             // If file is image send for analysis.
             $filetext = $this->analyse_image($file);

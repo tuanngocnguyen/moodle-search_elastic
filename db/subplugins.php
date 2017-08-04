@@ -15,20 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version info.
+ * Version details.
  *
- * @package     search_elastic
- * @copyright   Matt Porritt <mattp@catalyst-au.net>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    search_elastic
+ * @copyright  2017 Matt Porritt <mattp@catalyst-au.net>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2017080401;
-$plugin->release   = 2017080401;      // Same as version.
-$plugin->requires = 2016052304;
-$plugin->component = 'search_elastic';
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->dependencies = array(
-        'local_aws' => 2017030100
+$subplugins = array(
+    'elasticprocessors'       => 'search/engine/elastic/processors',
 );
+
