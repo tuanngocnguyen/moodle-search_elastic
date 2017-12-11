@@ -12,26 +12,6 @@ The following features are provided by this plugin:
 * Respects Moodle Proxy settings
 * Image recognition and indexing (via external service)
 
-# Contents
-1. [Supported Moodle Versions](#supported-moodle-versions)
-3. [Elasticsearch Version Support](#elasticsearch-version-support)
-4. [Verified Platforms](#verified-platforms)
-5. [Generic Elasticsearch Setup](#generic-elasticsearch-setup)
-6. [Azure Elasticsearch Setup](#azure-elasticsearch-setup)
-7. [AWS Elasticsearch Setup](#aws-elasticsearch-setup)
-8. [Moodle Plugin Installation](#moodle-plugin-installation)
-9. [Moodle Plugin Setup](#moodle-plugin-setup)
-10. [File Indexing Support](#file-indexing-support)
-  * 10.1 [Tika Setup](#tika-setup)
-  * 10.2 [Enabling File indexing support in Moodle](#enabling-file-indexing-support-in-moodle)
-  * 10.3 [Why use Tika as a stand alone service?](#why-use-tika-as-a-stand-alone-service)
-11. [Image Recognition and Indexing](#image-recognition-and-indexing)
-  * 11.1. [Enabling image recognition and indexing support in Moodle](#enabling-image-recognition-and-indexing-support-in-moodle)
-12. [Request Signing](#request-signing)
-  * 12.1. [Enabling Request Signing support in Moodle](#enabling-request-signing-support-in-moodle)
-13. [Webservices](#webservices)
-14. [Test Setup](#test-setup)
-
 ## Supported Moodle Versions
 This plugin currently supports Moodle:
 
