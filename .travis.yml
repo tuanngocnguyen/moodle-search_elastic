@@ -23,11 +23,12 @@ php:
   - 7.1
 
 env:
- global:
-   - TEST_SEARCH_ELASTIC_HOSTNAME=http://127.0.0.1
-   - TEST_SEARCH_ELASTIC_PORT=9200
-   - TEST_SEARCH_ELASTIC_INDEX=moodle_test
- matrix:
+  global:
+    - TEST_SEARCH_ELASTIC_HOSTNAME=http://127.0.0.1
+    - TEST_SEARCH_ELASTIC_PORT=9200
+    - TEST_SEARCH_ELASTIC_INDEX=moodle_test
+
+matrix:
   exclude:
     - php: 7.1
       env: DB=pgsql MOODLE_BRANCH=MOODLE_31_STABLE ESVER=2.3.4 ESURL=https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.4/elasticsearch-2.3.4.deb
