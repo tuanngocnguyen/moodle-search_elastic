@@ -47,8 +47,8 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $bosstedareas = $query->get_boosted_areas();
 
-        $this->assertEquals($bosstedareas['mod_assign-activity'], 2); // Check the results.
-        $this->assertEquals(count($bosstedareas), 1);
+        $this->assertEquals(2, $bosstedareas['mod_assign-activity']); // Check the results.
+        $this->assertEquals(1, count($bosstedareas));
 
     }
 
@@ -62,8 +62,8 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $bosstedareas = $query->get_boosted_areas();
 
-        $this->assertEquals(empty($bosstedareas), true); // Check the results.
-        $this->assertEquals(count($bosstedareas), 0);
+        $this->assertEquals(true, empty($bosstedareas)); // Check the results.
+        $this->assertEquals(0, count($bosstedareas));
 
     }
 
@@ -80,7 +80,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array('match' => array('areaid' => array('query' => 'boost_mod_assign-activity', 'boost' => 2)));
 
-        $this->assertEquals($proxy[0], $expected);
+        $this->assertEquals($expected, $proxy[0]);
     }
 
     /**
@@ -96,7 +96,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array();
 
-        $this->assertEquals($proxy, $expected);
+        $this->assertEquals($expected, $proxy);
     }
 
     /**
@@ -124,7 +124,7 @@ class search_elastic_query_testcase extends advanced_testcase {
                         '"post_tags":["@@HI_E@@"],"fragment_size":510,"encoder":"html","fields":{"title":{},'.
                         '"content":{},"description1":{},"description2":{}}}}';
 
-        $this->assertEquals($jsonresult, $jsonexpected);
+        $this->assertEquals($jsonexpected, $jsonresult);
     }
 
     /**
@@ -138,7 +138,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array('match' => array('courseid' => array('query' => 4, 'boost' => 2)));
 
-        $this->assertEquals($proxy[0], $expected);
+        $this->assertEquals($expected, $proxy[0]);
     }
 
     /**
@@ -156,7 +156,7 @@ class search_elastic_query_testcase extends advanced_testcase {
         $query = new \search_elastic\query();
 
         $result = $query->get_query($querydata, true);
-        $this->assertEquals($result['sort']['modified']['order'], 'asc');
+        $this->assertEquals('asc', $result['sort']['modified']['order']);
     }
 
     /**
@@ -174,7 +174,7 @@ class search_elastic_query_testcase extends advanced_testcase {
         $query = new \search_elastic\query();
 
         $result = $query->get_query($querydata, true);
-        $this->assertEquals($result['sort']['modified']['order'], 'desc');
+        $this->assertEquals('desc', $result['sort']['modified']['order']);
     }
 
     /**
@@ -192,7 +192,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array('range' => array('modified' => array('gte' => $filters->timestart)));
 
-        $this->assertEquals($proxy, $expected);
+        $this->assertEquals($expected, $proxy);
     }
 
     /**
@@ -210,7 +210,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array('range' => array('modified' => array('lte' => $filters->timeend)));
 
-        $this->assertEquals($proxy, $expected);
+        $this->assertEquals($expected, $proxy);
     }
 
     /**
@@ -228,7 +228,7 @@ class search_elastic_query_testcase extends advanced_testcase {
 
         $expected = array('range' => array('modified' => array('lte' => $filters->timeend, 'gte' => $filters->timestart)));
 
-        $this->assertEquals($proxy, $expected);
+        $this->assertEquals($expected, $proxy);
     }
 
     /**
