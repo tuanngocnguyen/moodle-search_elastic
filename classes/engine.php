@@ -69,7 +69,7 @@ class engine extends \core_search\engine {
     protected $configdefaults = array(
             'hostname' => 'http://127.0.0.1',
             'port' => 9200,
-            'index' => 'mooodle',
+            'index' => 'moodle',
             'sendsize' => 9000000
     );
 
@@ -141,18 +141,22 @@ class engine extends \core_search\engine {
 
         // Get existing index definition.
         $url = $this->get_url();
-        $indexeurl = $url . '/'. $this->config->index. '/_mapping';
+        $indexeurl = $url . '/' . $this->config->index . '/_mapping';
         $client = new \search_elastic\esrequest();
         $response = $client->get($indexeurl);
-        $responsebody = json_decode($response->getBody());
-        $indexfields = $responsebody->{$this->config->index}->mappings->doc->properties;
+        if (!$response instanceof guzzle_exception) {
+            $responsebody = json_decode($response->getBody());
+            $indexfields = $responsebody->{$this->config->index}->mappings->doc->properties;
 
-        // Iterrate through required fields and compare to index.
-        $requiredfields = \search_elastic\document::get_required_fields_definition();
-        foreach ($requiredfields as $name => $field) {
-            if ($indexfields->{$name}->type != $field['type']) {
-                $valid = false;
+            // Iterrate through required fields and compare to index.
+            $requiredfields = \search_elastic\document::get_required_fields_definition();
+            foreach ($requiredfields as $name => $field) {
+                if ($indexfields->{$name}->type != $field['type']) {
+                    $valid = false;
+                }
             }
+        } else {
+            $valid = false;
         }
 
         return $valid;
@@ -724,28 +728,34 @@ class engine extends \core_search\engine {
             // Response will return acknowledged True if deletion worked,
             // or a status of not found if index doesn't exist.
             // We'll treat both cases as good.
-            $response = json_decode($client->delete($indexeurl)->getBody());
-            if (isset($response->acknowledged) && ($response->acknowledged == true)) {
-                $this->create_index(); // Recreate the new index.
-                $returnval = true;
-            } else if (isset($response->status) && ($response->status == 404)) {
-                $this->create_index();
-                $returnval = true;
-            }
-        } else {
-            $url = $url . '/_search';
-            // TODO: move this to request class and check query construction.
-            $query = array('query' => array(
-                                'bool' => array(
-                                    'must' => array(
-                                        'match' => array('areaid' => $areaid)
+            $response = $client->delete($indexeurl);
+            if (!$response instanceof guzzle_exception) {
+            $responsebody = json_decode($response->getBody());
+                if (isset($responsebody->acknowledged) && ($responsebody->acknowledged == true)) {
+                    $this->create_index(); // Recreate the new index.
+                    $returnval = true;
+                } else if (isset($responsebody->status) && ($responsebody->status == 404)) {
+                    $this->create_index();
+                    $returnval = true;
+                }
+            } else {
+                $url = $url . '/_search';
+                // TODO: move this to request class and check query construction.
+                $query = array('query' => array(
+                                    'bool' => array(
+                                        'must' => array(
+                                            'match' => array('areaid' => $areaid)
+                                        )
                                     )
-                                )
-                            ));
-            $results = json_decode($client->post($url, json_encode($query))->getBody());
-            if (isset($results->hits)) {
-                foreach ($results->hits->hits as $result) {
-                    $this->delete_by_id($result->_id);
+                                ));
+                $results = $client->post($url, json_encode($query));
+                if (!$results instanceof guzzle_exception) {
+                    $resultsbody = json_decode($results)->getBody();
+                    if (isset($resultsbody->hits)) {
+                        foreach ($resultsbody->hits->hits as $result) {
+                            $this->delete_by_id($result->_id);
+                        }
+                    }
                 }
             }
         }
